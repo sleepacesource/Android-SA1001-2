@@ -7,12 +7,16 @@ import java.lang.reflect.Field;
 import com.sa10012sdk.demo.MainActivity;
 import com.sa10012sdk.demo.R;
 import com.sa10012sdk.demo.SearchBleDeviceActivity;
+import com.sleepace.sdk.core.nox.domain.SLPLight;
+import com.sleepace.sdk.core.nox.interfs.INoxManager;
+import com.sleepace.sdk.core.nox.interfs.ISleepAidManager;
 import com.sleepace.sdk.interfs.IConnectionStateCallback;
 import com.sleepace.sdk.interfs.IDeviceManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CONNECTION_STATE;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.ble.BleHelper;
+import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
@@ -26,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DeviceFragment extends BaseFragment {
-	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnUpgrade;
+	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnOneKeyStart, btnOneKeyStop, btnUpgrade;
 	private TextView tvDeviceName, tvDeviceId, tvVersion;
 	private boolean upgrading = false;
 
@@ -52,6 +56,8 @@ public class DeviceFragment extends BaseFragment {
 		btnDeviceId = (Button) root.findViewById(R.id.btn_get_device_id);
 		btnVersion = (Button) root.findViewById(R.id.btn_device_version);
 		btnUpgrade = (Button) root.findViewById(R.id.btn_upgrade_fireware);
+		btnOneKeyStart = (Button) root.findViewById(R.id.btn_onekey_start);
+		btnOneKeyStop = (Button) root.findViewById(R.id.btn_onekey_stop);
 	}
 
 
@@ -64,6 +70,8 @@ public class DeviceFragment extends BaseFragment {
 		btnDeviceId.setOnClickListener(this);
 		btnVersion.setOnClickListener(this);
 		btnUpgrade.setOnClickListener(this);
+		btnOneKeyStart.setOnClickListener(this);
+		btnOneKeyStop.setOnClickListener(this);
 	}
 
 
@@ -107,6 +115,8 @@ public class DeviceFragment extends BaseFragment {
 		btnDeviceName.setEnabled(enable);
 		btnDeviceId.setEnabled(enable);
 		btnVersion.setEnabled(enable);
+		btnOneKeyStart.setEnabled(enable);
+		btnOneKeyStop.setEnabled(enable);
 		btnUpgrade.setEnabled(enable);
 	}
 	
@@ -172,6 +182,28 @@ public class DeviceFragment extends BaseFragment {
 			}else {//断开设备
 				getDeviceHelper().disconnect();
 			}
+		}else if(v == btnOneKeyStart) {
+			SLPLight light = new SLPLight();
+			light.setR((byte)255);
+			getDeviceHelper().oneKeyStart(INoxManager.AromaSpeed.COMMON.getValue(), (byte)50, INoxManager.LightMode.LIGHT_COLOR, light, 3000, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					if(cd.getCallbackType() == INoxManager.METHOD_ONEKEY_START) {
+						SdkLog.log(TAG+" oneKeyStart " + cd);
+					}
+				}
+			});
+		}else if(v == btnOneKeyStop) {
+			getDeviceHelper().oneKeyStop(3000, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					if(cd.getCallbackType() == INoxManager.METHOD_ONEKEY_STOP) {
+						SdkLog.log(TAG+" oneKeyStop " + cd);
+					}
+				}
+			});
 		}else if(v == btnUpgrade){
 			FirmwareBean bean = getFirmwareBean();
 			if(bean == null){

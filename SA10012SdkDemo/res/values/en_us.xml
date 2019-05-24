@@ -129,6 +129,8 @@
     <string name="opt_fail">失败</string>
   	<string name="opt_time_out">超时</string>
   	<string name="nox_aroma">Nox Aroma</string>
+  	<string name="onekey_start">一键开启灯光香薰</string>
+  	<string name="onekey_stop">一键关闭灯光香薰</string>
 
     <string-array name="arr_week">
         <item>@string/mon</item>

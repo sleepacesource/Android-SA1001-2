@@ -117,6 +117,34 @@
             android:textColor="@color/COLOR_3"
             android:textSize="@dimen/Title_3" />
     </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_onekey_start"
+            style="@style/common_bt"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="@string/onekey_start"
+            android:textSize="@dimen/Title_2" />
+        
+        <Button
+            android:id="@+id/btn_onekey_stop"
+            style="@style/common_bt"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            android:text="@string/onekey_stop"
+            android:textSize="@dimen/Title_2" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_upgrade_fireware"

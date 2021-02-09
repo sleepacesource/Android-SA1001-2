@@ -488,7 +488,7 @@ public class SleepAidFragment extends BaseFragment {
 			LogUtil.log(TAG+" sleepAidConfig:" + aidInfo);
 			
 			mActivity.showLoading();
-			getDeviceHelper().sleepAidConfig(aidInfo, 3000, new IResultCallback() {
+			getDeviceHelper().sleepAidConfig(volume, brightness, r, g, b, w, aidInfo.getAidStopDuration(), 3000, new IResultCallback() {
 				@Override
 				public void onResultCallback(final CallbackData cd) {
 					// TODO Auto-generated method stub

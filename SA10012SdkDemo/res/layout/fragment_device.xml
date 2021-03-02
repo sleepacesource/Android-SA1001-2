@@ -147,6 +147,16 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_get_sleepaid_config"
+        style="@style/common_bt"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/get_sleepaid_config"
+        android:textSize="@dimen/Title_2" />
+    
+    <Button
         android:id="@+id/btn_upgrade_fireware"
         style="@style/common_bt"
         android:layout_height="@dimen/btn_height"

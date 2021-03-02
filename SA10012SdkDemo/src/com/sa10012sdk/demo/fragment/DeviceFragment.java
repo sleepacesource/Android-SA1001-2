@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import com.sa10012sdk.demo.MainActivity;
 import com.sa10012sdk.demo.R;
 import com.sa10012sdk.demo.SearchBleDeviceActivity;
+import com.sleepace.sdk.core.nox.domain.BleNoxAidInfo;
 import com.sleepace.sdk.core.nox.domain.SLPLight;
 import com.sleepace.sdk.core.nox.interfs.INoxManager;
 import com.sleepace.sdk.core.nox.interfs.ISleepAidManager;
@@ -30,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DeviceFragment extends BaseFragment {
-	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnOneKeyStart, btnOneKeyStop, btnUpgrade;
+	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnOneKeyStart, btnOneKeyStop, btnGetSleepAidConfig, btnUpgrade;
 	private TextView tvDeviceName, tvDeviceId, tvVersion;
 	private boolean upgrading = false;
 
@@ -55,6 +56,7 @@ public class DeviceFragment extends BaseFragment {
 		btnDeviceName = (Button) root.findViewById(R.id.btn_get_device_name);
 		btnDeviceId = (Button) root.findViewById(R.id.btn_get_device_id);
 		btnVersion = (Button) root.findViewById(R.id.btn_device_version);
+		btnGetSleepAidConfig = (Button) root.findViewById(R.id.btn_get_sleepaid_config);
 		btnUpgrade = (Button) root.findViewById(R.id.btn_upgrade_fireware);
 		btnOneKeyStart = (Button) root.findViewById(R.id.btn_onekey_start);
 		btnOneKeyStop = (Button) root.findViewById(R.id.btn_onekey_stop);
@@ -69,6 +71,7 @@ public class DeviceFragment extends BaseFragment {
 		btnDeviceName.setOnClickListener(this);
 		btnDeviceId.setOnClickListener(this);
 		btnVersion.setOnClickListener(this);
+		btnGetSleepAidConfig.setOnClickListener(this);
 		btnUpgrade.setOnClickListener(this);
 		btnOneKeyStart.setOnClickListener(this);
 		btnOneKeyStop.setOnClickListener(this);
@@ -182,6 +185,18 @@ public class DeviceFragment extends BaseFragment {
 			}else {//断开设备
 				getDeviceHelper().disconnect();
 			}
+		}else if(v == btnGetSleepAidConfig) {
+			getDeviceHelper().getSleepAidConfig(3000, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					BleNoxAidInfo aidInfo = null;
+					if(cd.isSuccess()) {
+						aidInfo = (BleNoxAidInfo) cd.getResult();
+					}
+					SdkLog.log(TAG+" getSleepAidConfig aidInfo:" + aidInfo);
+				}
+			});
 		}else if(v == btnOneKeyStart) {
 			SLPLight light = new SLPLight();
 			light.setR((byte)255);

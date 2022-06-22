@@ -12,6 +12,7 @@ import com.sleepace.sdk.domain.BleDevice;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.ble.BleHelper;
+import com.sleepace.sdk.util.SdkLog;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -310,7 +311,7 @@ public class SearchBleDeviceActivity extends BaseActivity {
 		            	deviceName = deviceName.trim();
 		            }
 		            
-//		            LogUtil.log(TAG+" onLeScan deviceName:" + deviceName);
+		            SdkLog.log(TAG+" onLeScan deviceName:" + deviceName);
 		            
 		            if(!TextUtils.isEmpty(modelName) && !TextUtils.isEmpty(deviceName) && deviceName.startsWith("SA") && deviceName.length() == 13){
 		            	BleDevice ble = new BleDevice();

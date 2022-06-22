@@ -155,15 +155,15 @@ public class EditAlarmActivity extends BaseActivity {
     
     private ValueSelectedListener valueSelectedListener = new ValueSelectedListener() {
 		@Override
-		public void onValueSelected(SelectValueDialog dialog, byte value) {
+		public void onValueSelected(SelectValueDialog dialog, int value) {
 			// TODO Auto-generated method stub
 			LogUtil.log(TAG+" onValueSelected val:" + value);
 			if(dialog == snoozeDurationDialog) {
-				snoozeLength = value;
-				alarm.setSnoozeLength(value);
+				snoozeLength = (byte)value;
+				alarm.setSnoozeLength(snoozeLength);
 				initSnoozeView();
 			}else if(dialog == volumeDialog) {
-				alarm.setVolume(value);
+				alarm.setVolume((byte)value);
 				initVolumeView();
 			}
 		}

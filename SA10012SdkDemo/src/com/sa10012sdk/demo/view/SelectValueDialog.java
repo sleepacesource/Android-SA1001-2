@@ -27,7 +27,7 @@ public class SelectValueDialog extends Dialog {
     private String unit;
     private ValueSelectedListener valueSelectedListener;
     private int[] data;
-    private byte value;
+    private int value;
 
 	public SelectValueDialog(Context context) {
 		super(context, R.style.myDialog);
@@ -48,7 +48,7 @@ public class SelectValueDialog extends Dialog {
 		initView();
 	}
 	
-	public void setDefaultValue(byte value) {
+	public void setDefaultValue(int value) {
 		this.value = value;
 		initView();
 	}
@@ -147,7 +147,7 @@ public class SelectValueDialog extends Dialog {
     }
     
     public interface ValueSelectedListener{
-    	void onValueSelected(SelectValueDialog dialog, byte value);
+    	void onValueSelected(SelectValueDialog dialog, int value);
     }
 
 }

@@ -261,10 +261,10 @@ public class SleepAidFragment extends BaseFragment {
 	
 	private ValueSelectedListener valueSelectedListener = new ValueSelectedListener() {
 		@Override
-		public void onValueSelected(SelectValueDialog dialog, byte value) {
+		public void onValueSelected(SelectValueDialog dialog, int value) {
 			// TODO Auto-generated method stub
 			LogUtil.log(TAG+" onValueSelected val:" + value);
-			aidInfo.setAidStopDuration(value);
+			aidInfo.setAidStopDuration((short)value);
 			initSleepAidDurationView();
 		}
 	};

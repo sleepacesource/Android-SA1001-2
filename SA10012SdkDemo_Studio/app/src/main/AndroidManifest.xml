@@ -1,0 +1,71 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sleepace.sa10012sdk.demo"
+    >
+
+    <uses-sdk
+        android:minSdkVersion="18"
+        android:targetSdkVersion="26" />
+    
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Black.NoTitleBar" 
+        android:name="com.sleepace.sa10012sdk.demo.DemoApp" >
+        
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.MainActivity"
+            android:screenOrientation="portrait" ><!-- SplashActivity --><!-- MainActivity -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.SearchBleDeviceActivity"
+            android:screenOrientation="portrait"
+            />
+         
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.DataListActivity"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.CenterKeyActivity"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.TimerListActivity"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.EditTimerActivity"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.AlarmListActivity"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.EditAlarmActivity"
+            android:screenOrientation="portrait"
+            />
+         
+         <activity
+            android:name="com.sleepace.sa10012sdk.demo.AlarmSettingActivity"
+            android:screenOrientation="portrait"
+            />
+
+    </application>
+
+</manifest>

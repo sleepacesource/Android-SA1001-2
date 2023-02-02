@@ -132,6 +132,8 @@
   	<string name="onekey_start">一键开启灯光香薰</string>
   	<string name="onekey_stop">一键关闭灯光香薰</string>
   	<string name="get_sleepaid_config">获取助眠参数</string>
+  	<string name="sleepaid_start">开始助眠</string>
+  	<string name="sleepaid_stop">停止助眠</string>
 
     <string-array name="arr_week">
         <item>@string/mon</item>

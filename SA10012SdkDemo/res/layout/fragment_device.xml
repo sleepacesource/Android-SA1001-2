@@ -165,5 +165,25 @@
         android:layout_marginTop="10dp"
         android:text="@string/fireware_update"
         android:textSize="@dimen/Title_2" />
+    
+    <Button
+        android:id="@+id/btn_sleepaid_start"
+        style="@style/common_bt"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/sleepaid_start"
+        android:textSize="@dimen/Title_2" />
+    
+    <Button
+        android:id="@+id/btn_sleepaid_stop"
+        style="@style/common_bt"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/sleepaid_stop"
+        android:textSize="@dimen/Title_2" />
 
 </LinearLayout>

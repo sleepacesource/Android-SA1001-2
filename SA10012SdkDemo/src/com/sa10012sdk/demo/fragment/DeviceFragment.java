@@ -8,6 +8,7 @@ import com.sa10012sdk.demo.MainActivity;
 import com.sa10012sdk.demo.R;
 import com.sa10012sdk.demo.SearchBleDeviceActivity;
 import com.sleepace.sdk.core.nox.domain.BleNoxAidInfo;
+import com.sleepace.sdk.core.nox.domain.BleNoxWorkStatus;
 import com.sleepace.sdk.core.nox.domain.SLPLight;
 import com.sleepace.sdk.core.nox.interfs.INoxManager;
 import com.sleepace.sdk.core.nox.interfs.ISleepAidManager;
@@ -17,6 +18,7 @@ import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CONNECTION_STATE;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.ble.BleHelper;
+import com.sleepace.sdk.sa10012.SA10012Helper.WorkStatusListener;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Fragment;
@@ -31,7 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DeviceFragment extends BaseFragment {
-	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnOneKeyStart, btnOneKeyStop, btnGetSleepAidConfig, btnUpgrade;
+	private Button btnConnectDevice, btnDeviceName, btnDeviceId, btnVersion, btnOneKeyStart, btnOneKeyStop, btnGetSleepAidConfig, btnUpgrade,
+		btnStartSleepAid, btnStopSleepAid;
 	private TextView tvDeviceName, tvDeviceId, tvVersion;
 	private boolean upgrading = false;
 
@@ -60,6 +63,8 @@ public class DeviceFragment extends BaseFragment {
 		btnUpgrade = (Button) root.findViewById(R.id.btn_upgrade_fireware);
 		btnOneKeyStart = (Button) root.findViewById(R.id.btn_onekey_start);
 		btnOneKeyStop = (Button) root.findViewById(R.id.btn_onekey_stop);
+		btnStartSleepAid = (Button) root.findViewById(R.id.btn_sleepaid_start);
+		btnStopSleepAid = (Button) root.findViewById(R.id.btn_sleepaid_stop);
 	}
 
 
@@ -67,6 +72,7 @@ public class DeviceFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		super.initListener();
 		getDeviceHelper().addConnectionStateCallback(stateCallback);
+		getDeviceHelper().addWorkStatusListener(workStatusListener);
 		btnConnectDevice.setOnClickListener(this);
 		btnDeviceName.setOnClickListener(this);
 		btnDeviceId.setOnClickListener(this);
@@ -75,6 +81,8 @@ public class DeviceFragment extends BaseFragment {
 		btnUpgrade.setOnClickListener(this);
 		btnOneKeyStart.setOnClickListener(this);
 		btnOneKeyStop.setOnClickListener(this);
+		btnStartSleepAid.setOnClickListener(this);
+		btnStopSleepAid.setOnClickListener(this);
 	}
 
 
@@ -123,6 +131,14 @@ public class DeviceFragment extends BaseFragment {
 		btnUpgrade.setEnabled(enable);
 	}
 	
+	private WorkStatusListener workStatusListener = new WorkStatusListener() {
+		@Override
+		public void onWorkStatusChanged(BleNoxWorkStatus workStatus) {
+			// TODO Auto-generated method stub
+			SdkLog.log(TAG+" onWorkStatusChanged-----------" + workStatus);
+		}
+	};
+	
 	private IConnectionStateCallback stateCallback = new IConnectionStateCallback() {
 		@Override
 		public void onStateChanged(IDeviceManager manager, final CONNECTION_STATE state) {
@@ -165,6 +181,7 @@ public class DeviceFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
 		getDeviceHelper().removeConnectionStateCallback(stateCallback);
+		getDeviceHelper().removeWorkStatusListener(workStatusListener);
 	}
 
 	
@@ -219,7 +236,28 @@ public class DeviceFragment extends BaseFragment {
 					}
 				}
 			});
-		}else if(v == btnUpgrade){
+		}else if(v == btnStartSleepAid) {
+			getDeviceHelper().sleepAidStart((byte)1, (byte)1, (byte)1, 3000, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					if(cd.getCallbackType() == INoxManager.METHOD_SLEEPAID_START) {
+						SdkLog.log(TAG+" sleepAidStart " + cd);
+					}
+				}
+			});
+		}else if(v == btnStopSleepAid) {
+			getDeviceHelper().sleepAidStop(false, 3000, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					if(cd.getCallbackType() == INoxManager.METHOD_SLEEPAID_STOP) {
+						SdkLog.log(TAG+" sleepAidStop " + cd);
+					}
+				}
+			});
+		}
+		else if(v == btnUpgrade){
 			FirmwareBean bean = getFirmwareBean();
 			if(bean == null){
 				return;

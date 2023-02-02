@@ -11,6 +11,7 @@ import com.sa10012sdk.demo.util.Utils;
 import com.sa10012sdk.demo.view.SelectValueDialog;
 import com.sa10012sdk.demo.view.SelectValueDialog.ValueSelectedListener;
 import com.sleepace.sdk.core.nox.domain.BleNoxAidInfo;
+import com.sleepace.sdk.core.nox.domain.BleNoxWorkStatus;
 import com.sleepace.sdk.core.nox.domain.SLPLight;
 import com.sleepace.sdk.core.nox.interfs.INoxManager;
 import com.sleepace.sdk.core.nox.interfs.INoxManager.AromaSpeed;
@@ -19,6 +20,8 @@ import com.sleepace.sdk.interfs.IDeviceManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CONNECTION_STATE;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa10012.SA10012Helper.WorkStatusListener;
+import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -90,6 +93,8 @@ public class SleepAidFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		super.initListener();
 		getDeviceHelper().addConnectionStateCallback(stateCallback);
+		getDeviceHelper().addWorkStatusListener(workStatusListener);
+		
 		tvMusic.setOnClickListener(this);
 		vSleepAidTime.setOnClickListener(this);
 		btnSendVolume.setOnClickListener(this);
@@ -230,7 +235,6 @@ public class SleepAidFragment extends BaseFragment {
 
 	protected void initUI() {
 		// TODO Auto-generated method stub
-		
 		aidInfo.setAidStopDuration((byte) 1);
 		
 		int[] data = new int[45];
@@ -319,6 +323,14 @@ public class SleepAidFragment extends BaseFragment {
 		}
 	}
 	
+	private WorkStatusListener workStatusListener = new WorkStatusListener() {
+		@Override
+		public void onWorkStatusChanged(BleNoxWorkStatus workStatus) {
+			// TODO Auto-generated method stub
+			SdkLog.log(TAG+" onWorkStatusChanged-----------" + workStatus);
+		}
+	};
+	
 	private IConnectionStateCallback stateCallback = new IConnectionStateCallback() {
 		@Override
 		public void onStateChanged(IDeviceManager manager, final CONNECTION_STATE state) {
@@ -350,6 +362,7 @@ public class SleepAidFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
 		getDeviceHelper().removeConnectionStateCallback(stateCallback);
+		getDeviceHelper().removeWorkStatusListener(workStatusListener);
 		unregisterTouchListener(touchListener);
 	}
 
